@@ -1,3 +1,8 @@
+/*
+    The routes handling for customer, requires models for customers.
+    Allows users to submit, get, update, or delete a customer object.
+*/
+
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();

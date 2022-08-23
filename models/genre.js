@@ -1,3 +1,8 @@
+/*
+  The model for genre objects. 
+  Exports a genre object, a genre schema, and a function that validates a genre object.
+*/
+
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
@@ -18,5 +23,15 @@ function validateGenre(genre) {
   return Joi.validate(genre, schema);
 }
 
+const genreSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minLength: 5,
+    maxLength: 50
+  }
+});
+
 exports.Genre = Genre; 
 exports.validate = validateGenre;
+exports.genreSchema = genreSchema;

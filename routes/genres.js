@@ -1,3 +1,8 @@
+/*
+    The routes handling for genres, requires models for genres.
+    Allows users to submit, get, update, or delete a desired genre.
+*/
+
 const {Genre, validate} = require('../models/genre');
 const mongoose = require('mongoose');
 const express = require('express');

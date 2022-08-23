@@ -1,3 +1,8 @@
+/*
+  The model for customer objects. 
+  Exports a customer schema and a function that validates a customer object.
+*/
+
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
