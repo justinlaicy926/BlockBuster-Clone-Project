@@ -1,0 +1,25 @@
+/*
+Middleware function for verifying tokens from user
+*/
+
+const jwt = require('jsonwebtoken');
+const config = require('config');
+
+function auth(req, res, next){
+    const token = req.header('x-auth-token');
+    
+    //sends unauthorized status, and exits
+    if (!token) return res.status(401).send('Access denied. No token provided.');
+
+    try {
+        const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+        //adds the decoded info to user
+        req.user = decoded;
+        next();
+    }
+    catch (ex) {
+        res.status(400).send('Invalid token.');
+    }
+}
+
+module.exports = auth
