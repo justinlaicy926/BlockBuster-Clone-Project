@@ -19,9 +19,25 @@ const auth = require('./routes/auth');
 const express = require('express');
 const app = express();
 
+//catches exceptions outside express
+process.on('uncaughtException', (ex)=>{
+    winston.error(ex.message, ex);
+    //exits with a non-zero code
+    process.exit(1);
+});
+
+//catches unhandled rejections
+process.on('unhandledRejection', (ex)=>{
+    winston.error(ex.message, ex);
+    //exits with a non-zero code
+    process.exit(1);
+});
+
+//only catches errors thrown in the express pipeline
 winston.add(winston.transport.defaultMaxListeners, {
     filename: 'logfile.log'
 });
+//MogoDB is better for queryings
 winston.add(winston.transport.MongoDB, {
     db: 'mongodb://localhost/bb',
     //logs only errors
