@@ -2,6 +2,10 @@
     The main application file.
 */
 
+require('winston-mongodb');
+const winston = require('winston');
+require('express-async-errors');
+const error = require('./middleware/error');
 const config = require('config');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -14,6 +18,15 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const express = require('express');
 const app = express();
+
+winston.add(winston.transport.defaultMaxListeners, {
+    filename: 'logfile.log'
+});
+winston.add(winston.transport.MongoDB, {
+    db: 'mongodb://localhost/bb',
+    //logs only errors
+    level: 'error'
+});
 
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
@@ -31,6 +44,9 @@ app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+
+//error handling
+app.use(error);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
