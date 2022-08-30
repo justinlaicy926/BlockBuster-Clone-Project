@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchALL"
   },
   "keywords": [],
   "author": "",
@@ -23,5 +23,8 @@
     "mongoose": "^6.5.2",
     "winston": "^3.8.1",
     "winston-mongodb": "^5.0.7"
+  },
+  "devDependencies": {
+    "jest": "^29.0.1"
   }
 }
