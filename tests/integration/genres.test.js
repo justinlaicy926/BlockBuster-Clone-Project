@@ -13,7 +13,7 @@ describe('/api/genres', () => {
     });
 
     describe('GET /', ()=> {
-        it('should return all genres', ()=>{
+        it('should return all genres', async ()=>{
             await Genre.collection.insertMany([
                 {name: 'genre1'},
                 {name: 'genre2'}
@@ -28,7 +28,7 @@ describe('/api/genres', () => {
     });
 
     describe('GET /:id', ()=> {
-        it('should return a genre if a valid id is passed', ()=>{
+        it('should return a genre if a valid id is passed', async ()=>{
             const genre = new Genre({name: 'genre1'});
             await genre.save();
 
@@ -38,14 +38,14 @@ describe('/api/genres', () => {
             expect(res.body).toHaveProperty('name', genre.name);
         });
 
-        it('should return 404 if no genre with the given id exists', ()=>{
+        it('should return 404 if no genre with the given id exists', async ()=>{
             const id = mongoose.Types.ObjectId();
             const res = await request(server).get('/api/genres/' + id);
 
             expect(res.status).toBe(404);
         });
 
-        it('should return 404 if an invalid id is passed', ()=>{
+        it('should return 404 if an invalid id is passed', async ()=>{
             const res = await request(server).get('/api/genres/1');
 
             expect(res.status).toBe(404);
